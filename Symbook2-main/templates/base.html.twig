@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Welcome!
+			{% endblock %}
+		</title>
+		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>"> {% block stylesheets %}{% endblock %}
+		<link rel="stylesheet" href="{{asset('bootstrap.css')}}">
+	</head>
+	<body>
+
+		<nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="#">SymBook</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarColor01">
+					<ul class="navbar-nav me-auto">
+						<li class="nav-item">
+							<a class="nav-link" href="{{url('app_home')}}">Accueil
+								<span class="visually-hidden">(current)</span>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{url('admin_livres')}}">Nos Livres
+								<span class="visually-hidden">(current)</span>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{url('admin_categorie')}}">les catégories</a>
+						</li>
+							{% if is_granted('ROLE_ADMIN')  %}
+                    <li class="nav-item">
+							<a class="nav-link" href="{{url('app_gestion_user_index')}}">List User</a>
+						</li>
+						 <li class="nav-item">
+							<a class="nav-link" href="{{url('livresplusvendu')}}">les livre plus Vendu</a>
+						</li>
+						{% endif %}
+
+					</ul>
+					<ul class="navbar-nav me-ml">
+						<li class="nav-item">
+							<a class="nav-link" href="#">Panier
+								<span class="visually-hidden">(current)</span>
+							</a>
+						</li>
+						{% if app.user %}
+							<li class="nav-item">
+								<a class="nav-link" href="{{url('app_logout')}}">Déconnexion</a>
+							</li>
+						{% else %}
+
+							<li class="nav-item">
+								<a class="nav-link" href="{{url('app_register')}}">S'inscrire
+									<span class="visually-hidden">(current)</span>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="{{url('app_login')}}">Connexion
+									<span class="visually-hidden">(current)</span>
+								</a>
+							</li>
+
+
+						{% endif %}
+					</ul>
+
+
+				</div>
+			</div>
+		</nav>
+		<div class="container mt-3"> {% block body %}{% endblock %}
+			</div>
+		</body>
+	</html>

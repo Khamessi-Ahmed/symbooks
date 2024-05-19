@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mise à jour du livre{{ parent() }}{% endblock %}
+
+{% block body %}
+    <h1>Mise à jour du livre</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.titre) }}
+        {{ form_row(form.Auteur) }}
+        {{ form_row(form.editeur) }}
+    
+        {{ form_row(form.slug) }}
+        {{ form_row(form.prix) }}
+        {{ form_row(form.resume) }}
+        {{ form_row(form.isbn) }}
+        {{ form_row(form.image) }}
+        
+        <button type="submit" class="btn btn-primary">Mettre à jour</button>
+    {{ form_end(form) }}
+{% endblock %}

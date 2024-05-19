@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Statistiques des Livres les Plus Vendus{% endblock %}
+
+{% block stylesheets %}
+<style>
+    #bookSalesChart {
+        max-width: 300px;
+        max-height: 300px;
+        width: 100%;
+        height: auto;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Statistiques des Livres les Plus Vendus</h1>
+    <canvas id="bookSalesChart" aria-label="chart" role="img"></canvas>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        console.log("Chart.js script loaded");
+
+        document.addEventListener("DOMContentLoaded", function() {
+            console.log("DOMContentLoaded event fired");
+            
+            if (typeof Chart !== 'undefined') {
+                console.log("Chart.js loaded successfully:", Chart.version);
+            } else {
+                console.error("Chart.js did not load");
+                return;
+            }
+
+            let bookSalesChart = document.getElementById("bookSalesChart");
+            if (bookSalesChart) {
+                console.log("Canvas element found:", bookSalesChart);
+                
+                let bookChart = new Chart(bookSalesChart, {
+                    type: "bar",
+                    data: {
+                        labels: {{ bookTitles|raw }},
+                        datasets: [{
+                            label: "Nombre de Ventes",
+                            data: {{ bookSales|raw }},
+                            backgroundColor: "rgba(75, 192, 192, 0.2)",
+                            borderColor: "rgba(75, 192, 192, 1)",
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+
+                console.log("Chart created successfully:", bookChart);
+            } else {
+                console.error("Canvas element not found");
+            }
+        });
+    </script>
+</div>
+{% endblock %}

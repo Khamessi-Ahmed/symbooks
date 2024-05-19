@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil
+{% endblock %}
+{% block body %}
+	<h1>détail du livre
+		{{livre.titre|capitalize}}
+		({{livre.prix}}
+		DT)</h1>
+	<div class="row">
+		<div class="col-3">
+			<img src="{{livre.image}}" alt="">
+		</div>
+		<h4>ISBN :{{livre.isbn}}</h4>
+		<h4>Editeur :
+			{{livre.editeur}}</h4>
+		<h4>Date Edition :
+			{{livre.editedAt|date('d-m-Y')}}</h4>
+		<p>
+			{{livre.resume}}</p>
+	</table>
+</p></div>{% endblock %}

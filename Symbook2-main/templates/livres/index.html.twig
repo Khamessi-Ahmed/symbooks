@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil
+    <link rel="stylesheet" href="{{ asset('style.css') }}">
+</head>
+{% endblock %}
+
+{% block body %}
+<head>
+
+<h1>Liste des livres</h1>
+<form action="{{ path('admin_livres') }}" method="get" >
+    <input class="form-control mr-sm-2" type="text" name="titre" placeholder="Rechercher par titre" value="{{ titre }}">
+    <input class="form-control mr-sm-2" type="text" name="auteur" placeholder="Rechercher par auteur" value="{{ auteur }}">
+    <button class="btn btn-outline-success ml-2" type="submit">Rechercher</button>
+</form>
+
+<table class="table">
+    <tr>
+        <th>Titre</th>
+        <th>ISBN</th>
+        <th>Editeur</th>
+        <th>Auteur</th>
+        <th>Date Edition</th>
+        <th>Prix(DT)</th>
+        <th colspan="3">Action</th>
+    </tr>
+
+    {% for livre in livres %}
+        <tr>
+            <td>{{ livre.titre|capitalize }}</td>
+            <td>{{ livre.isbn }}</td>
+            <td>{{ livre.editeur }}</td>
+            <td>{{ livre.Auteur }}</td>
+            <td>{{ livre.editedAt|date('d-m-Y') }}</td>
+            <td>{{ livre.prix }}</td>
+            <td>
+                <a href="{{ url('admin_livres_show', {'id': livre.id}) }}" class="btn btn-success btn-sm">Voir détail...</a>
+            </td>
+            <td>{% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ url('app_admin_livres_delete', {'id': livre.id}) }}" class="btn btn-danger btn-sm">Supprimer</a>
+            </td>
+            <td>
+                <a href="{{ url('admin_livres_update', {'id': livre.id}) }}" class="btn btn-primary btn-sm">Editer</a>
+            </td>{% endif %}
+        </tr>
+    {% endfor %}
+</table>
+
+{% if is_granted('ROLE_ADMIN') %}
+    <a href="/admin/livres/add" class="btn btn-primary btn-sm">Ajouter nouvelle livre</a>
+{% endif %}
+{% endblock %}
